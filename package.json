@@ -1,0 +1,21 @@
+{
+  "name": "generator-ts-truffle",
+  "version": "0.1.0",
+  "description": "Generator of basic Typescript-Truffle project environment",
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Wojciech Harzowski",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^2.7.1",
+    "yeoman-generator": "^2.0.2"
+  }
+}

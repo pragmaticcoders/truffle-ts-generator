@@ -1,0 +1,1 @@
+# truffle-ts-generator
