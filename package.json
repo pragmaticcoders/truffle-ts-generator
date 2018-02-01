@@ -1,7 +1,7 @@
 {
   "name": "generator-ts-truffle",
   "version": "0.1.0",
-  "description": "Generator of basic Typescript-Truffle project environment",
+  "description": "Yeoman generator of basic Typescript-Truffle project environment",
   "files": [
     "app"
   ],
