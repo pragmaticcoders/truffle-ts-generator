@@ -8,6 +8,6 @@
     "noImplicitAny": true
   },
   "include": [
-    "app/**/*.ts"
+    "app/index.ts"
   ]
 }
