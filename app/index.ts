@@ -90,8 +90,6 @@ export = class extends Generator {
     });
   }
 
-  paths() {}
-
   writing() {
     this._writingConfig();
     this._writingUtils();
@@ -99,6 +97,13 @@ export = class extends Generator {
     this._writingContracts();
     this._writingTest();
     this._writingMigrations();
+  }
+
+  install() {
+    this.installDependencies({
+      bower: false,
+      npm: true
+    }).then(() => console.log('Everything is ready!'));
   }
 
   _writingConfig() {
@@ -194,17 +199,13 @@ export = class extends Generator {
     this.fs.copyTpl(
       this.templatePath(typesPath + '_truffle.d.ts'),
       this.destinationPath(typesPath + 'truffle.d.ts'),
-      {
-        props: this.props
-      }
+      {}
     );
 
     this.fs.copyTpl(
       this.templatePath(typesPath + '_web3.d.ts'),
       this.destinationPath(typesPath + 'web3.d.ts'),
-      {
-        props: this.props
-      }
+      {}
     );
 
     this.fs.copyTpl(
@@ -273,8 +274,4 @@ export = class extends Generator {
       );
     }
   }
-
-  // install() {
-  //   this.installDependencies();
-  // }
 };

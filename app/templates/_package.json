@@ -4,7 +4,7 @@
   <% if (props.description !== '') { %>"description": "<%= props.description %>",<% } %>
   "main": "<%= props.entryPoint %>",
   "scripts": {
-    "test": "<% props.testCommand %>",
+    "test": "<%- props.testCommand %>",
     "compile": "tsc && truffle compile",
     "format": "prettier --write *.ts **/*.ts test/**/*.ts"
   },
