@@ -20,27 +20,22 @@ declare module '<%= props.mainType %>' {
         options?: TransactionOptions
       ): Promise<TransactionResult>;
     }
-
-    <% props.contracts.forEach (function (contract) { %>
-    interface <%= contract %> extends ContractBase {
+    <% for (key in props.contracts) { %>
+    interface <%= props.contracts[key] %> extends ContractBase {
     }
-    <% }); %>
-
+    <% }; %>
     interface MigrationsContract extends Contract<Migrations> {
       'new'(options?: TransactionOptions): Promise<Migrations>;
     }
-
-    <% props.contracts.forEach (function (contract) { %>
-    interface <%= contract %>Contract extends Contract<<%= contract %>> {
-      'new'(options?: TransactionOptions): Promise<<%= contract %>>;
+    <% for (key in props.contracts) { %>
+    interface <%= props.contracts[key] %>Contract extends Contract<<%= props.contracts[key] %>> {
+      'new'(options?: TransactionOptions): Promise<<%= props.contracts[key] %>>;
     }
-    <% }); %>
-
+    <% }; %>
     interface <%= props.mainTypeCamelcase %>Artifacts extends TruffleArtifacts {
       require(name: string): AnyContract;
-      require(name: './Migrations.sol'): MigrationsContract;
-      <% props.contracts.forEach (function (contract) { %>require(name: './<%= contract %>.sol'): <%= contract %>Contract;
-      <% }); %>
+      require(name: './Migrations.sol'): MigrationsContract;<% for (key in props.contracts) { %>
+      require(name: './<%= props.contracts[key] %>.sol'): <%= props.contracts[key] %>Contract;<% }; %>
     }
   }
 

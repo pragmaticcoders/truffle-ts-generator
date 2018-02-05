@@ -1,4 +1,5 @@
 import * as Generator from 'yeoman-generator';
+import { slugify } from './helpers';
 
 export = class extends Generator {
   prompting() {
@@ -7,7 +8,10 @@ export = class extends Generator {
         type: 'input',
         name: 'name',
         message: 'Package name:',
-        default: this.appname
+        default: this.appname,
+        filter: function(input: string) {
+          return slugify(input);
+        }
       },
       {
         type: 'input',
@@ -37,7 +41,10 @@ export = class extends Generator {
         type: 'input',
         name: 'mainType',
         message: 'Main project type name:',
-        default: 'project'
+        default: 'project',
+        filter: function(input: string) {
+          return input.toLowerCase();
+        }
       },
       {
         type: 'input',
@@ -55,7 +62,10 @@ export = class extends Generator {
         type: 'input',
         name: 'authorUrl',
         message: 'Author url:',
-        default: ''
+        default: '',
+        when: answers => {
+          return answers.author !== '';
+        }
       },
       {
         type: 'input',
@@ -67,26 +77,36 @@ export = class extends Generator {
         type: 'confirm',
         name: 'generateContracts',
         message: 'Would you like to add contracts?'
+      },
+      {
+        type: 'input',
+        name: 'contracts',
+        message: 'Provide contracts names separated by space:',
+        when: answers => {
+          return answers.generateContracts;
+        },
+        filter: function(input: any) {
+          const names = input.split(' ');
+          for (let i in names) {
+            names[i] =
+              names[i].charAt(0).toUpperCase() +
+              names[i].slice(1).toLowerCase();
+          }
+          return names;
+        }
+      },
+      {
+        type: 'list',
+        name: 'solidityVersion',
+        message: 'Choose Solidity version:',
+        choices: ['0.4.18', '0.4.19'],
+        default: '0.4.18'
       }
     ]).then(answers => {
+      answers['mainTypeCamelcase'] =
+        answers['mainType'].charAt(0).toUpperCase() +
+        answers['mainType'].slice(1);
       this.props = answers;
-      this.props['mainTypeCamelcase'] =
-        this.props['mainType'].charAt(0).toUpperCase() +
-        this.props['mainType'].slice(1);
-
-      if (answers.generateContracts) {
-        return this.prompt([
-          {
-            type: 'input',
-            name: 'contractsNames',
-            message: 'Provide contracts names separated by space:'
-          }
-        ]).then(answers => {
-          console.log(answers.contractsNames);
-          this.props['contracts'] = answers.contractsNames.split(' ');
-          console.log(this.props['contracts']);
-        });
-      }
     });
   }
 
@@ -103,7 +123,7 @@ export = class extends Generator {
     this.installDependencies({
       bower: false,
       npm: true
-    }).then(() => console.log('Everything is ready!'));
+    }).then(() => console.log("You're ready to go!"));
   }
 
   _writingConfig() {
@@ -223,7 +243,7 @@ export = class extends Generator {
     this.fs.copyTpl(
       this.templatePath(contractsPath + '_Migrations.sol'),
       this.destinationPath(contractsPath + 'Migrations.sol'),
-      {}
+      { props: this.props }
     );
 
     for (let key in this.props['contracts']) {
