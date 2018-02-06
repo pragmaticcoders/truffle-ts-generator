@@ -90,7 +90,7 @@ export = class extends Generator {
           for (let i in names) {
             names[i] =
               names[i].charAt(0).toUpperCase() +
-              names[i].slice(1).toLowerCase();
+              names[i].slice(1);
           }
           return names;
         }
