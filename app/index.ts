@@ -2,6 +2,8 @@ import * as Generator from 'yeoman-generator';
 import { slugify } from './helpers';
 
 export = class extends Generator {
+  private props: any;
+
   prompting() {
     return this.prompt([
       {
@@ -11,7 +13,8 @@ export = class extends Generator {
         default: this.appname,
         filter: function(input: string) {
           return slugify(input);
-        }
+        },
+        store: true
       },
       {
         type: 'input',
@@ -44,7 +47,8 @@ export = class extends Generator {
         default: 'project',
         filter: function(input: string) {
           return input.toLowerCase();
-        }
+        },
+        store: true
       },
       {
         type: 'input',
@@ -86,21 +90,25 @@ export = class extends Generator {
           return answers.generateContracts;
         },
         filter: function(input: any) {
-          const names = input.split(' ');
-          for (let i in names) {
-            names[i] =
-              names[i].charAt(0).toUpperCase() +
-              names[i].slice(1);
+          if (typeof input == 'string') {
+            input = input.replace(',', ' ').split(' ');
+
+            for (let i in input) {
+              input[i] = input[i].charAt(0).toUpperCase() + input[i].slice(1);
+            }
           }
-          return names;
-        }
+
+          return input;
+        },
+        store: true
       },
       {
         type: 'list',
         name: 'solidityVersion',
         message: 'Choose Solidity version:',
         choices: ['0.4.18', '0.4.19'],
-        default: '0.4.18'
+        default: '0.4.18',
+        store: true
       }
     ]).then(answers => {
       answers['mainTypeCamelcase'] =
