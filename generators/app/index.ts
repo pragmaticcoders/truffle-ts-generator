@@ -13,8 +13,7 @@ export = class extends Generator {
         default: this.appname,
         filter: function(input: string) {
           return slugify(input);
-        },
-        store: true
+        }
       },
       {
         type: 'input',
@@ -47,8 +46,7 @@ export = class extends Generator {
         default: 'project',
         filter: function(input: string) {
           return input.toLowerCase();
-        },
-        store: true
+        }
       },
       {
         type: 'input',
@@ -99,16 +97,14 @@ export = class extends Generator {
           }
 
           return input;
-        },
-        store: true
+        }
       },
       {
         type: 'list',
         name: 'solidityVersion',
         message: 'Choose Solidity version:',
         choices: ['0.4.18', '0.4.19'],
-        default: '0.4.18',
-        store: true
+        default: '0.4.18'
       }
     ]).then(answers => {
       answers['mainTypeCamelcase'] =
@@ -116,6 +112,10 @@ export = class extends Generator {
         answers['mainType'].slice(1);
       this.props = answers;
     });
+  }
+
+  configuring() {
+    this._storePromptValues();
   }
 
   writing() {
@@ -132,6 +132,21 @@ export = class extends Generator {
       bower: false,
       npm: true
     }).then(() => console.log("You're ready to go!"));
+  }
+
+  _storePromptValues() {
+    this.config.set('name', this.props['name']);
+    this.config.set('mainType', this.props['mainType']);
+    if (this.props.hasOwnProperty('author')) {
+      this.config.set('author', this.props['author']);
+    }
+    if (this.props.hasOwnProperty('authorUrl')) {
+      this.config.set('authorUrl', this.props['authorUrl']);
+    }
+    if (this.props.hasOwnProperty('contracts')) {
+      this.config.set('contracts', this.props['contracts']);
+    }
+    this.config.set('solidityVersion', this.props['solidityVersion']);
   }
 
   _writingConfig() {

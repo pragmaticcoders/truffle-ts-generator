@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Yeoman generator of basic Typescript-Truffle project environment",
   "files": [
-    "app"
+    "generators"
   ],
   "keywords": [
     "yeoman-generator"

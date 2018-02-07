@@ -8,6 +8,6 @@
     "noImplicitAny": true
   },
   "include": [
-    "app/index.ts"
+    "generators/*/index.ts"
   ]
 }
