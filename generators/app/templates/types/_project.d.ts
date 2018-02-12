@@ -1,4 +1,5 @@
 declare module '<%= props.mainType %>' {
+  import { BigNumber } from 'bignumber.js';
   import {
     AnyContract,
     Contract,
@@ -7,6 +8,7 @@ declare module '<%= props.mainType %>' {
     TransactionResult,
     TruffleArtifacts
   } from 'truffle';
+    import { AnyNumber } from 'web3';
 
   namespace <%= props.mainType %> {
     interface Migrations extends ContractBase {
@@ -22,8 +24,19 @@ declare module '<%= props.mainType %>' {
     }
     <% for (key in props.contracts) { %>
     interface <%= props.contracts[key] %> extends ContractBase {
+      <% if (props.examples) { %>exampleAttribute(): Promise<BigNumber>;
+
+      exampleFunction(
+        newValue: AnyNumber,
+        options?: TransactionOptions
+      ): Promise<TransactionResult>;<% } %>
     }
     <% }; %>
+    <% if (props.examples) { %>
+    interface ExampleAttributeChangedEvent {
+      newValue: BigNumber;
+    }<% } %>
+
     interface MigrationsContract extends Contract<Migrations> {
       'new'(options?: TransactionOptions): Promise<Migrations>;
     }

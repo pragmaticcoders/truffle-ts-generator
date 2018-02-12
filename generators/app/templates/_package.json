@@ -2,11 +2,18 @@
   "name": "<%= props.name %>",
   "version": "<%= props.version %>",
   <% if (props.description !== '') { %>"description": "<%= props.description %>",<% } %>
-  "main": "<%= props.entryPoint %>",
+  "main": "index.js",
   "scripts": {
-    "test": "<%- props.testCommand %>",
-    "compile": "tsc && truffle compile",
-    "format": "prettier --write *.ts **/*.ts test/**/*.ts"
+    "compile": "run-s compile:ts compile:sol",
+    "compile:sol": "truffle compile",
+    "compile:ts": "tsc",
+    "test": "run-s compile:ts test:js",
+    "test:js": "truffle test",
+    "lint": "run-p -c --aggregate-output lint:solhint lint:tslint",
+    "lint:tslint": "tslint --project .",
+    "lint:tslint:fix": "tslint --fix --project .",
+    "lint:solhint": "solhint \"contracts/**/*.sol\" \"build/flat/*.sol\"",
+    "format": "prettier --write \"**/*.ts\""
   },
   <% if (props.gitRepository !== '') { %>"repository": {
     "type": "git",
@@ -24,6 +31,7 @@
     "@types/ramda": "^0.25.8",
     "bignumber.js": "^5.0.0",
     "chai": "^4.1.2",
+    "npm-run-all": "^4.1.2",
     "prettier": "^1.9.2",
     "ramda": "^0.25.0",
     "solhint": "^1.1.10",

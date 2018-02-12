@@ -29,27 +29,6 @@ export = class extends Generator {
       },
       {
         type: 'input',
-        name: 'entryPoint',
-        message: 'Entry point:',
-        default: 'index.js'
-      },
-      {
-        type: 'input',
-        name: 'testCommand',
-        message: 'Test command:',
-        default: 'npm run compile && truffle test'
-      },
-      {
-        type: 'input',
-        name: 'mainType',
-        message: 'Main project type name:',
-        default: 'project',
-        filter: function(input: string) {
-          return input.toLowerCase();
-        }
-      },
-      {
-        type: 'input',
         name: 'gitRepository',
         message: 'Git repository:',
         default: ''
@@ -76,9 +55,18 @@ export = class extends Generator {
         default: 'ISC'
       },
       {
+        type: 'input',
+        name: 'mainType',
+        message: 'Main project type name:',
+        default: 'project',
+        filter: function(input: string) {
+          return input.toLowerCase();
+        }
+      },
+      {
         type: 'confirm',
         name: 'generateContracts',
-        message: 'Would you like to add contracts?'
+        message: 'Would you like to generate contracts?'
       },
       {
         type: 'input',
@@ -97,6 +85,14 @@ export = class extends Generator {
           }
 
           return input;
+        }
+      },
+      {
+        type: 'confirm',
+        name: 'examples',
+        message: 'Would you like to generate examples?',
+        when: answers => {
+          return answers.generateContracts;
         }
       },
       {

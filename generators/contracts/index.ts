@@ -20,6 +20,11 @@ export = class extends Generator {
 
           return input;
         }
+      },
+      {
+        type: 'confirm',
+        name: 'examples',
+        message: 'Would you like to generate examples?'
       }
     ]).then(answers => {
       const config = this.config.getAll();
