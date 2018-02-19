@@ -15,6 +15,7 @@ git clone https://github.com/pragmaticcoders/truffle-ts-generator.git
 
 and build it with:
 ```
+npm install
 npm run compile && sudo npm link
 ```
 
