@@ -40,7 +40,7 @@ export = class extends Generator {
 
       this.config.set(
         'contracts',
-        config.contracts.concat(answers['contracts'])
+         config.contracts ? config.contracts.concat(answers['contracts']) : answers['contracts']
       );
       this.props = answers;
     });
