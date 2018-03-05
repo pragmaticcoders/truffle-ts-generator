@@ -25,13 +25,27 @@ export = class extends Generator {
         type: 'confirm',
         name: 'examples',
         message: 'Would you like to generate examples?'
-      }
+      },
+      {
+          type: 'list',
+          name: 'solidityVersion',
+          message: 'Choose Solidity version:',
+          choices: ['0.4.18', '0.4.19'],
+          default: '0.4.18',
+          when: () => {
+              return !this.config.get('solidityVersion');
+          }
+      },
     ]).then(answers => {
       const config = this.config.getAll();
 
       answers['author'] = config.author;
       answers['authorUrl'] = config.authorUrl;
-      answers['solidityVersion'] = config.solidityVersion;
+      if (!config.solidityVersion) {
+          this.config.set('solidityVersion', answers['solidityVersion'])
+      } else {
+          answers['solidityVersion'] = config.solidityVersion;
+      }
 
       answers['contracts'] = this._removeDuplicatedContracts(
         answers['newContracts'],
@@ -40,8 +54,9 @@ export = class extends Generator {
 
       this.config.set(
         'contracts',
-        config.contracts.concat(answers['contracts'])
+         config.contracts ? config.contracts.concat(answers['contracts']) : answers['contracts']
       );
+
       this.props = answers;
     });
   }
