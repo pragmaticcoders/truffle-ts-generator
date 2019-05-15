@@ -27,11 +27,10 @@ export = class extends Generator {
         message: 'Would you like to generate examples?'
       },
       {
-          type: 'list',
+          type: 'input',
           name: 'solidityVersion',
-          message: 'Choose Solidity version:',
-          choices: ['0.4.18', '0.4.19'],
-          default: '0.4.18',
+          message: 'Set Solidity version:',
+          default: '',
           when: () => {
               return !this.config.get('solidityVersion');
           }

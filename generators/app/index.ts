@@ -96,12 +96,11 @@ export = class extends Generator {
         }
       },
       {
-        type: 'list',
+        type: 'input',
         name: 'solidityVersion',
-        message: 'Choose Solidity version:',
-        choices: ['0.4.18', '0.4.19'],
-        default: '0.4.18'
-      }
+        message: 'Set Solidity version:',
+        default: ''
+      },
     ]).then(answers => {
       answers['mainTypeCamelcase'] =
         answers['mainType'].charAt(0).toUpperCase() +
