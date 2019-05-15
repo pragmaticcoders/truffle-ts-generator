@@ -25,8 +25,8 @@
     "yeoman-generator": "^4.0.0"
   },
   "devDependencies": {
-    "prettier": "^1.10.2",
+    "prettier": "^1.17.1",
     "solhint": "^2.0.0",
-    "typescript": "^2.7.1"
+    "typescript": "^3.4.5"
   }
 }
