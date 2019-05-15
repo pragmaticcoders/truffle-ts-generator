@@ -2,11 +2,12 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
+    "esModuleInterop": true,
     "moduleResolution": "node",
     "baseUrl": ".",
     "strict": true,
     "noImplicitAny": true,
-    "types": ["bignumber.js", "chai", "mocha", "node"]
+    "types": ["chai", "mocha", "node", "bignumber.js"]
   },
   "include": [
     "migrations/**/*.ts",

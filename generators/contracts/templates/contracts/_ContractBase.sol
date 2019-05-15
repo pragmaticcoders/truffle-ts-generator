@@ -17,7 +17,7 @@ contract <%= contractName %> {
 
     event ExampleAttributeChanged(uint256 newValue);
 
-    function <%= contractName %>() public {
+    constructor() public {
         exampleAttribute = 10;
     }
 
@@ -27,6 +27,6 @@ contract <%= contractName %> {
     {
         exampleAttribute = newValue;
 
-        ExampleAttributeChanged(newValue);
+        emit ExampleAttributeChanged(newValue);
     }<% } %>
 }

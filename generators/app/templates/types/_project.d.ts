@@ -8,28 +8,19 @@ declare module '<%= props.mainType %>' {
     TransactionResult,
     TruffleArtifacts
   } from 'truffle';
-    import { AnyNumber } from 'web3';
+  import { AnyNumber } from 'web3';
 
   namespace <%= props.mainType %> {
     interface Migrations extends ContractBase {
-      setCompleted(
-        completed: number,
-        options?: TransactionOptions
-      ): Promise<TransactionResult>;
+      setCompleted(completed: number, options?: TransactionOptions): Promise<TransactionResult>;
 
-      upgrade(
-        address: Address,
-        options?: TransactionOptions
-      ): Promise<TransactionResult>;
+      upgrade(address: Address, options?: TransactionOptions): Promise<TransactionResult>;
     }
     <% for (key in props.contracts) { %>
     interface <%= props.contracts[key] %> extends ContractBase {
       <% if (props.examples) { %>exampleAttribute(): Promise<BigNumber>;
 
-      exampleFunction(
-        newValue: AnyNumber,
-        options?: TransactionOptions
-      ): Promise<TransactionResult>;<% } %>
+      exampleFunction(newValue: AnyNumber, options?: TransactionOptions): Promise<TransactionResult>;<% } %>
     }
     <% }; %>
     <% if (props.examples) { %>

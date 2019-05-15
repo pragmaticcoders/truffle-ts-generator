@@ -10,6 +10,10 @@ export class Web3Utils {
     return promisify<number>(cb => this.web3.eth.getBlockNumber(cb));
   }
 
+  public async getBlock(block: number) {
+    return promisify<Web3.Block>(cb => this.web3.eth.getBlock(block, cb));
+  }
+
   public async getBalance(account: Address) {
     return promisify<BigNumber>(cb => this.web3.eth.getBalance(account, cb));
   }

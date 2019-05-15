@@ -9,11 +9,20 @@
     "compile:ts": "tsc",
     "test": "run-s compile:ts test:js",
     "test:js": "truffle test",
-    "lint": "run-p -c --aggregate-output lint:solhint lint:tslint",
+    "develop": "truffle develop",
+    "testrpc": "ganache-cli --blocktime 5 --networkId 4447 --mnemonic 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat' --port 9545",    "migrate:dev": "run-s compile:ts migrate:dev:js",
+    "migrate:dev:js": "truffle migrate --reset --network dev",
+    "migrate:rinkeby": "run-s compile:ts migrate:rinkeby:js",
+    "migrate:rinkeby:js": "truffle migrate --network rinkeby",
+    "migrate:rinkeby:reset": "run-s compile:ts migrate:rinkeby:reset:js",
+    "migrate:rinkeby:reset:js": "truffle migrate --network rinkeby --reset",
+    "lint": "run-p -c --aggregate-output lint:solhint lint:solium lint:tslint",
     "lint:tslint": "tslint --project .",
     "lint:tslint:fix": "tslint --fix --project .",
+    "lint:solium": "solium -d contracts",
     "lint:solhint": "solhint \"contracts/**/*.sol\" \"build/flat/*.sol\"",
-    "format": "prettier --write \"**/*.ts\""
+    "format": "prettier --write \"**/*.ts\"",
+    "start": "run-p testrpc migrate:dev"
   },
   <% if (props.gitRepository !== '') { %>"repository": {
     "type": "git",
@@ -24,19 +33,22 @@
     "url": "<%= props.authorUrl %>"<% } %>
   },<% } %>
   "license": "<%= props.license %>",
-  "devDependencies": {
+  "dependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
     "@types/node": "^12.0.2",
     "@types/ramda": "^0.26.8",
     "bignumber.js": "^8.1.1",
     "chai": "^4.2.0",
+    "ramda": "^0.26.1",
+    "truffle": "^5.0.17",
+    "typescript": "^3.4.5"
+  },
+  "devDependencies": {
     "npm-run-all": "^4.1.5",
     "prettier": "^1.17.1",
-    "ramda": "^0.26.1",
     "solhint": "^2.0.0",
-    "truffle": "^5.0.17",
-    "tslint": "^5.16.0",
-    "typescript": "^3.4.5"
+    "solium": "^1.2.4",
+    "tslint": "^5.16.0"
   }
 }

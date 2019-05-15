@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 
+import { ContractContextDefinition } from 'truffle';
 import * as Web3 from 'web3';
 
 import {
@@ -8,13 +9,7 @@ import {
   <%= props.mainTypeCamelcase %>Artifacts,
 } from '<%= props.mainType %>';
 
-import { ContractContextDefinition } from 'truffle';
-import {
-  assertNumberEqual,
-  assertReverts,
-  findLastLog,
-  ZERO_ADDRESS
-} from './helpers';
+import { assertNumberEqual, assertReverts, createSignature, findLastLog, ZERO_ADDRESS } from './helpers';
 
 declare const web3: Web3;
 declare const artifacts: <%= props.mainTypeCamelcase %>Artifacts;

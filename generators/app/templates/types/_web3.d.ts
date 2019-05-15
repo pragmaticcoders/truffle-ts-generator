@@ -11,6 +11,8 @@ declare module 'web3' {
       defaultAccount: Address;
 
       getBlockNumber(callback: Callback<number>): void;
+      getBlock(block: number, callback: Callback<Web3.Block>): void;
+
       sendTransaction(txData: Web3.TxData, callback: Callback<string>): void;
       getBalance(account: Address, callback: Callback<BigNumber>): void;
       sign(account: Address, text: string): string;
@@ -45,10 +47,7 @@ declare module 'web3' {
     }
 
     interface Provider {
-      sendAsync(
-        payload: RequestPayload,
-        callback: (err: Error | null, result: ResponsePayload) => void
-      ): void;
+      sendAsync(payload: RequestPayload, callback: (err: Error | null, result: ResponsePayload) => void): void;
     }
 
     interface TxData {
@@ -59,6 +58,28 @@ declare module 'web3' {
       gasPrice?: AnyNumber;
       data?: string;
       nonce?: AnyNumber;
+    }
+
+    interface Block {
+      number: number;
+      hash: string;
+      parentHash: string;
+      nonce: string;
+      sha3Uncles: string;
+      logsBloom: string;
+      transactionsRoot: string;
+      stateRoot: string;
+      receiptsRoot: string;
+      miner: string;
+      difficulty: BigNumber;
+      totalDifficulty: BigNumber;
+      extraData: string;
+      size: number;
+      gasLimit: number;
+      gasUsed: number;
+      timestamp: number;
+      transactions: string[];
+      uncles: string[];
     }
   }
 

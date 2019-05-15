@@ -1,15 +1,23 @@
-const gas = 3000000;
-const host = 'localhost';
-const port = 8545;
+import { toGwei } from './utils';
+
+const defaults = {
+  gas: 3000000,
+  gasPrice: toGwei(10),
+  host: 'localhost',
+  port: 8545
+};
 
 export = {
-    networks: {
-        testrpc: {
-            gas,
-            gasPrice: 0,
-            host,
-            network_id: '*',
-            port
-        }
+  networks: {
+    dev: {
+      ...defaults,
+      network_id: '*',
+      port: 9545
+    },
+    rinkeby: {
+      ...defaults,
+      network_id: '4'
     }
+  },
+  test_file_extension_regexp: '\\/test\\/(?!jquery|require).*\\.js$'
 };

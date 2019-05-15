@@ -188,8 +188,36 @@ export = class extends Generator {
       }
     );
     this.fs.copyTpl(
+      this.templatePath('_.soliumignore'),
+      this.destinationPath('.soliumignore'),
+      {
+        props: this.props
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath('_.soliumrc.json'),
+      this.destinationPath('.soliumrc.json'),
+      {
+        props: this.props
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath('_.solhint.json'),
+      this.destinationPath('.solhint.json'),
+      {
+        props: this.props
+      }
+    );
+    this.fs.copyTpl(
       this.templatePath('_.gitignore'),
       this.destinationPath('.gitignore'),
+      {
+        props: this.props
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath('_.gitlab-ci.yml'),
+      this.destinationPath('.gitlab-ci.yml'),
       {
         props: this.props
       }
@@ -257,6 +285,12 @@ export = class extends Generator {
 
   _writingContracts() {
     const contractsPath = 'contracts/';
+    
+    this.fs.copyTpl(
+      this.templatePath(contractsPath + '_Ownable.sol'),
+      this.destinationPath(contractsPath + 'Ownable.sol'),
+      { props: this.props }
+    );
 
     this.fs.copyTpl(
       this.templatePath(contractsPath + '_Migrations.sol'),
